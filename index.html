@@ -47,17 +47,21 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 5%;
-      height: 96px;
+      height: 68px;
       background: rgba(0,0,0,0.90);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(0,184,204,0.12);
     }
 
-    .nav-logo img {
-      height: 100px;
-      width: auto;
-      display: block;
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
     }
+
+    .nav-logo:hover { color: var(--teal); transition: color 0.2s; }
 
     .nav-links {
       display: flex;
@@ -99,7 +103,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 140px 5% 90px;
+      padding: 120px 5% 90px;
       position: relative;
       overflow: hidden;
     }
@@ -131,9 +135,9 @@
     }
 
     .hero-logo img {
-      height: 130px;
+      height: 200px;
       width: auto;
-      filter: drop-shadow(0 0 28px rgba(0,184,204,0.25));
+      filter: drop-shadow(0 0 36px rgba(0,184,204,0.30));
     }
 
     .hero-eyebrow {
@@ -853,9 +857,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#" class="nav-logo">
-      <img src="Bidmana Logo Transparent.png" alt="Bidmana" />
-    </a>
+    <a href="#" class="nav-logo">Bidmana</a>
     <ul class="nav-links">
       <li><a href="#problem">The Problem</a></li>
       <li><a href="#solution">Solution</a></li>
@@ -868,6 +870,9 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-logo anim">
+      <img src="Bidmana Logo Transparent.png" alt="Bidmana" />
+    </div>
     <div class="hero-eyebrow">AI Powered Proposal Operations</div>
     <h1 class="anim" style="animation-delay:0.08s">Modernizing Government<br /><em>Proposal Operations</em></h1>
     <p class="hero-sub anim" style="animation-delay:0.16s">
@@ -1195,9 +1200,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <a href="#">
-      <img src="Bidmana Logo Transparent.png" alt="Bidmana" class="footer-logo" style="height:32px; opacity:0.6;" />
-    </a>
+    <a href="#" style="font-family:'DM Serif Display',serif; font-size:1.2rem; color:var(--gold-muted); text-decoration:none;">Bidmana</a>
     <span class="footer-copy">© 2026 Bidmana. All rights reserved.</span>
   </footer>
 
