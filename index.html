@@ -662,11 +662,185 @@
     .anim { opacity: 0; }
     .anim.visible { animation: fadeUp 0.7s ease forwards; }
 
+    /* ── BIDMANA LINK ── */
+    .blink-section {
+      background: var(--black-mid);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blink-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -10%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(0,184,204,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .blink-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .blink-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0,184,204,0.08);
+      border: 1px solid rgba(0,184,204,0.25);
+      border-radius: 4px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .blink-feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .blink-feature {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.25rem;
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 8px;
+      transition: border-color 0.25s;
+    }
+
+    .blink-feature:hover { border-color: rgba(0,184,204,0.25); }
+
+    .blink-feature-icon {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 6px;
+      background: var(--teal-glow);
+      border: 1px solid rgba(0,184,204,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .blink-feature-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .blink-feature h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .blink-feature p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── AI INTELLIGENCE ── */
+    .intelligence {
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intelligence::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(0,184,204,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .intel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .intel-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 10px;
+      padding: 2rem;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .intel-card:hover {
+      border-color: rgba(0,184,204,0.3);
+      transform: translateY(-2px);
+    }
+
+    .intel-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--teal-glow);
+      border: 1px solid rgba(0,184,204,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .intel-card-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .intel-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .intel-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .problem-grid,
       .advantage-inner,
-      .consultant-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .consultant-inner,
+      .blink-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .intel-grid { grid-template-columns: 1fr; }
       .solution-grid { grid-template-columns: 1fr; }
       .sol-card { border-right: none; border-bottom: 1.5px solid var(--black-border); }
       .sol-card:last-child { border-bottom: none; }
@@ -689,7 +863,8 @@
     <ul class="nav-links">
       <li><a href="#problem">The Problem</a></li>
       <li><a href="#solution">Solution</a></li>
-      <li><a href="#consultants">Our Consultants</a></li>
+      <li><a href="#link">Bidmana Link</a></li>
+      <li><a href="#consultants">Consultants</a></li>
       <li><a href="#advantage">Why Us</a></li>
       <li><a href="#contact" class="nav-cta">Request Access</a></li>
     </ul>
@@ -821,6 +996,54 @@
 
   <div class="divider"></div>
 
+  <!-- BIDMANA LINK -->
+  <section class="blink-section" id="link">
+    <div class="blink-inner">
+      <div>
+        <div class="blink-badge">New</div>
+        <div class="section-label">Bidmana Link</div>
+        <h2 class="section-title anim">Your network for <em>teaming and partnerships</em></h2>
+        <p class="section-body anim" style="animation-delay:0.1s">
+          Bidmana Link is Bidmana's network for companies seeking teaming partners and strategic partnerships. Companies opt in and become discoverable within Bidmana by their capabilities and NAICS codes, making it easy to find the right partner for any pursuit.
+        </p>
+        <p class="section-body anim" style="animation-delay:0.18s; margin-top:1.25rem;">
+          Whether you are looking for a large prime to team with, a niche subcontractor with a specific capability, or a small business to meet set-aside requirements, Bidmana Link surfaces the right match inside the platform where you are already working.
+        </p>
+      </div>
+      <div class="blink-feature-list anim" style="animation-delay:0.2s">
+        <div class="blink-feature">
+          <div class="blink-feature-icon">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </div>
+          <div>
+            <h4>Opt-In Discovery</h4>
+            <p>Companies choose to be listed and control exactly what capabilities and codes they advertise to the network.</p>
+          </div>
+        </div>
+        <div class="blink-feature">
+          <div class="blink-feature-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4>Capabilities and NAICS Matching</h4>
+            <p>Search the network by core competencies, NAICS codes, certifications, and past performance areas.</p>
+          </div>
+        </div>
+        <div class="blink-feature">
+          <div class="blink-feature-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          </div>
+          <div>
+            <h4>Integrated into Your Workflow</h4>
+            <p>Find partners directly inside Bidmana while you are working a pursuit, not through a separate directory.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- CONSULTANT SECTION -->
   <section class="consultant" id="consultants">
     <div class="consultant-inner">
@@ -864,6 +1087,47 @@
           <h4>Pricing Strategy</h4>
           <p>Price-to-win analysis and cost narrative development aligned to competitive intelligence.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AI INTELLIGENCE -->
+  <section class="intelligence" id="intelligence">
+    <div class="section-label">The Technology</div>
+    <h2 class="section-title anim">AI built for government contracting, <em>not generic content</em></h2>
+    <p class="section-body anim" style="animation-delay:0.1s">
+      Bidmana's intelligence layer is purpose-built for the GovCon domain. Every model, every feedback loop, and every data source is designed around how federal proposals actually work.
+    </p>
+    <div class="intel-grid">
+      <div class="intel-card anim" style="animation-delay:0.12s">
+        <div class="intel-card-icon">
+          <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </div>
+        <h3>Proprietary GovCon Intelligence Layer</h3>
+        <p>Trained on federal solicitations, agency procurement patterns, and real proposal outcomes. The model understands the language, structure, and expectations of government acquisition in a way generic AI simply cannot.</p>
+      </div>
+      <div class="intel-card anim" style="animation-delay:0.2s">
+        <div class="intel-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Domain-Specific AI Models</h3>
+        <p>Built around how government proposals actually work, not adapted from general purpose tools. Bidmana's models reason about compliance, evaluation criteria, section structure, and competitive positioning the way an experienced proposal professional would.</p>
+      </div>
+      <div class="intel-card anim" style="animation-delay:0.28s">
+        <div class="intel-card-icon">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <h3>Expert Feedback Loops</h3>
+        <p>Every review cycle, compliance check, and pursuit outcome feeds back into our models. Bidmana gets sharper with every engagement, continuously improving through the expertise of real GovCon professionals embedded in the platform.</p>
+      </div>
+      <div class="intel-card anim" style="animation-delay:0.36s">
+        <div class="intel-card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Your Knowledge Stays Yours</h3>
+        <p>Your institutional knowledge is stored in your private workspace and used only to make your AI sharper. It is never shared, never pooled with other customers, and never used to train models outside your organization.</p>
       </div>
     </div>
   </section>
