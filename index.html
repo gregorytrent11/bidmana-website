@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bidmana — AI-Powered Proposal Operations</title>
+  <meta name="description" content="Bidmana modernizes government proposal operations through AI and expert collaboration. Purpose-built for federal contractors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0b1220;
+      --navy-mid: #111c30;
+      --navy-light: #1a2840;
+      --navy-border: #1f3050;
+      --gold: #c8a96e;
+      --gold-light: #e2c99a;
+      --gold-muted: #8a6e40;
+      --text-primary: #eef2f8;
+      --text-secondary: #8fa3c0;
+      --text-muted: #4e6480;
+      --accent-blue: #3b7dd8;
+      --accent-blue-dim: #1e3d6e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: rgba(11,18,32,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,110,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(ellipse at center, rgba(59,125,216,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(ellipse at center, rgba(200,169,110,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.875rem 2.25rem;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 400;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--text-primary); }
+
+    .btn-ghost svg { transition: transform 0.2s; }
+    .btn-ghost:hover svg { transform: translateX(3px); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--navy-border) 30%, var(--navy-border) 70%, transparent);
+      margin: 0;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 100px 5%;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.25rem);
+      line-height: 1.15;
+      max-width: 680px;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 580px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ── PROBLEM ── */
+    .problem {
+      background: var(--navy-mid);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 4rem;
+    }
+
+    .problem-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .problem-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .problem-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 6px;
+      background: rgba(200,169,110,0.08);
+      border: 1px solid rgba(200,169,110,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .problem-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold-muted);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .problem-item h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .problem-item p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .problem-stat-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--navy-light);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+    }
+
+    .stat-card .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      font-weight: 300;
+    }
+
+    /* ── SOLUTION ── */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      margin-top: 4rem;
+      border: 1.5px solid var(--navy-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .sol-card {
+      background: var(--navy-mid);
+      padding: 2.25rem 2rem;
+      border-right: 1.5px solid var(--navy-border);
+      transition: background 0.25s;
+    }
+
+    .sol-card:last-child { border-right: none; }
+    .sol-card:hover { background: var(--navy-light); }
+
+    .sol-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      color: rgba(200,169,110,0.18);
+      margin-bottom: 1.25rem;
+      line-height: 1;
+    }
+
+    .sol-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .sol-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── MOAT / ADVANTAGE ── */
+    .advantage {
+      background: var(--navy-mid);
+    }
+
+    .advantage-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .moat-list {
+      list-style: none;
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .moat-list li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--navy-border);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+
+    .moat-list li:first-child { border-top: 1px solid var(--navy-border); }
+    .moat-list li:hover { color: var(--text-primary); }
+
+    .moat-dot {
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .why-now-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0;
+    }
+
+    .why-card {
+      background: var(--navy-light);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .why-card h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .why-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── VISION BAND ── */
+    .vision-band {
+      background: var(--navy-light);
+      border-top: 1px solid var(--navy-border);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .vision-band .section-label { justify-content: center; display: flex; }
+
+    .vision-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.75rem);
+      line-height: 1.15;
+      max-width: 900px;
+      margin: 0 auto;
+      color: var(--text-primary);
+    }
+
+    .vision-quote em { color: var(--gold); font-style: italic; }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 120px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(200,169,110,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-section .section-title {
+      margin: 0 auto 1.25rem;
+      text-align: center;
+    }
+
+    .cta-section .section-body {
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--navy-border);
+      padding: 2.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      color: var(--gold-muted);
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .anim { opacity: 0; }
+    .anim.visible { animation: fadeUp 0.7s ease forwards; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .problem-grid,
+      .advantage-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .sol-card { border-right: none; border-bottom: 1.5px solid var(--navy-border); }
+      .sol-card:last-child { border-bottom: none; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .why-now-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Bidmana</a>
+    <ul class="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#advantage">Why Us</a></li>
+      <li><a href="#contact" class="nav-cta">Request Access</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">AI-Powered Proposal Operations</div>
+    <h1 class="anim">Modernizing Government<br /><em>Proposal Operations</em></h1>
+    <p class="hero-sub anim" style="animation-delay:0.12s">
+      Bidmana combines AI-powered capture intelligence with hands-on proposal support to help federal contractors make better pursuit decisions — and win more business.
+    </p>
+    <div class="hero-actions anim" style="animation-delay:0.22s">
+      <a href="#contact" class="btn-primary">Request Early Access</a>
+      <a href="#solution" class="btn-ghost">
+        See how it works
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title anim">Government proposal development is <em>broken</em></h2>
+    <p class="section-body anim" style="animation-delay:0.1s">
+      Federal contractors operate in one of the most complex procurement environments in the world — yet most proposal teams still rely on fragmented tools, tribal knowledge, and disconnected workflows.
+    </p>
+    <div class="problem-grid">
+      <div class="problem-items">
+        <div class="problem-item anim">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <div>
+            <h4>Fragmented Workflows</h4>
+            <p>Disconnected spreadsheets, Word docs, and SharePoint systems with no unified operational layer.</p>
+          </div>
+        </div>
+        <div class="problem-item anim" style="animation-delay:0.08s">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <div>
+            <h4>Tribal Knowledge Loss</h4>
+            <p>Critical institutional knowledge lives in people's heads, not systems — creating compounding risk.</p>
+          </div>
+        </div>
+        <div class="problem-item anim" style="animation-delay:0.16s">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4>Scarce Specialized Labor</h4>
+            <p>Expert proposal professionals are expensive, in short supply, and difficult to scale across pursuits.</p>
+          </div>
+        </div>
+        <div class="problem-item anim" style="animation-delay:0.24s">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h4>Rising Costs, Falling Margins</h4>
+            <p>Growing proposal complexity drives up cost of capture while win rates remain stubbornly unpredictable.</p>
+          </div>
+        </div>
+      </div>
+      <div class="problem-stat-block anim" style="animation-delay:0.1s">
+        <div class="stat-card">
+          <div class="stat-num">$80B+</div>
+          <div class="stat-label">Federal proposal operations market — largely underserved by modern tooling</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">40%</div>
+          <div class="stat-label">Of proposal labor cost is non-value-add coordination and administrative overhead</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Growth in proposal complexity over the past decade as federal requirements expand</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SOLUTION -->
+  <section id="solution">
+    <div class="section-label">The Solution</div>
+    <h2 class="section-title anim">An AI + expert-enabled proposal operations <em>infrastructure platform</em></h2>
+    <p class="section-body anim" style="animation-delay:0.1s">
+      Purpose-built for government contractors. Not another point tool — a complete operational infrastructure that compounds in value over time.
+    </p>
+    <div class="solution-grid anim" style="animation-delay:0.15s">
+      <div class="sol-card">
+        <div class="sol-num">01</div>
+        <h3>Capture Intelligence</h3>
+        <p>AI-powered pursuit analysis that helps your team make faster, more confident bid/no-bid decisions backed by data — not gut instinct.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">02</div>
+        <h3>Proposal Operations</h3>
+        <p>Integrated workflow infrastructure replacing disconnected tools with a unified operational layer built for the full proposal lifecycle.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">03</div>
+        <h3>Expert Collaboration</h3>
+        <p>On-demand access to specialized GovCon expertise embedded directly into your workflows — not a separate consulting engagement.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">04</div>
+        <h3>Institutional Knowledge</h3>
+        <p>A living knowledge system that captures, organizes, and applies your organization's proposal history so nothing is ever lost.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">05</div>
+        <h3>Pursuit Decisions</h3>
+        <p>Data-driven frameworks that quantify opportunity risk, resource requirements, and win probability before you commit.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-num">06</div>
+        <h3>Sticky Data Systems</h3>
+        <p>Proposal data that compounds in value over time — every win, loss, and lesson learned feeding back into smarter future decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- VISION BAND -->
+  <div class="vision-band">
+    <div class="section-label">Product Vision</div>
+    <div class="vision-quote anim">
+      The ultimate AI tool for <em>modern</em><br />Government proposal teams.
+    </div>
+  </div>
+
+  <!-- ADVANTAGE -->
+  <section class="advantage" id="advantage">
+    <div class="advantage-inner">
+      <div>
+        <div class="section-label">Competitive Advantage</div>
+        <h2 class="section-title anim">Our moat is built to <em>last</em></h2>
+        <p class="section-body anim" style="animation-delay:0.1s">
+          Bidmana's advantage isn't a feature — it's a compounding system. Every layer of our platform reinforces the next, creating defensible value that generic AI tools cannot replicate.
+        </p>
+        <ul class="moat-list anim" style="animation-delay:0.15s">
+          <li><span class="moat-dot"></span>Embedded GovCon domain expertise</li>
+          <li><span class="moat-dot"></span>Workflow infrastructure — not just features</li>
+          <li><span class="moat-dot"></span>Institutional proposal knowledge systems</li>
+          <li><span class="moat-dot"></span>Expert-enabled operational workflows</li>
+          <li><span class="moat-dot"></span>Sticky proposal data systems that compound value</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label" style="margin-top: 0.25rem;">Why Now</div>
+        <div class="why-now-grid anim" style="animation-delay:0.2s; margin-top: 1.25rem;">
+          <div class="why-card">
+            <h4>AI Infrastructure Maturity</h4>
+            <p>The underlying AI capabilities to deliver on this vision are finally production-ready.</p>
+          </div>
+          <div class="why-card">
+            <h4>Proposal Complexity</h4>
+            <p>Federal requirements are expanding faster than traditional teams can scale to meet them.</p>
+          </div>
+          <div class="why-card">
+            <h4>Labor Shortages</h4>
+            <p>GovCon proposal talent is scarce and expensive — creating urgent demand for AI augmentation.</p>
+          </div>
+          <div class="why-card">
+            <h4>Tooling Gaps</h4>
+            <p>Existing GovCon software was built for compliance, not for modern proposal operations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="section-label" style="justify-content:center; display:flex;">Get Early Access</div>
+    <h2 class="section-title anim">Ready to modernize your<br /><em>proposal operations?</em></h2>
+    <p class="section-body anim" style="animation-delay:0.1s">
+      Bidmana is in active development and onboarding a select group of federal contractor partners. If you're building a proposal team that wants to win more, reach out.
+    </p>
+    <div class="cta-actions anim" style="animation-delay:0.2s">
+      <a href="mailto:1bidmana@gmail.com" class="btn-primary">Request Early Access</a>
+      <a href="mailto:1bidmana@gmail.com" class="btn-ghost">
+        1bidmana@gmail.com
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">Bidmana</a>
+    <span class="footer-copy">© 2025 Bidmana. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
