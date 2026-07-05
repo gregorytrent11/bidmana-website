@@ -95,6 +95,32 @@
 
     .nav-cta:hover { background: var(--teal-light) !important; color: #000 !important; }
 
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+      padding: 0;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text-primary);
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -468,31 +494,6 @@
       color: var(--text-secondary);
       line-height: 1.6;
       font-weight: 300;
-    }
-
-    .consultant-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--teal-glow);
-      border: 1px solid rgba(0,184,204,0.2);
-      border-radius: 20px;
-      padding: 0.4rem 1rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--teal);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .consultant-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal);
-      box-shadow: 0 0 6px var(--teal);
     }
 
     /* ── ADVANTAGE ── */
@@ -917,7 +918,29 @@
       .team-grid { grid-template-columns: 1fr; }
       .sol-card { border-right: none; border-bottom: 1.5px solid var(--black-border); }
       .sol-card:last-child { border-bottom: none; }
-      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 68px;
+        right: 0;
+        width: min(78vw, 320px);
+        height: calc(100vh - 68px);
+        margin: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 1.5rem;
+        background: rgba(0,0,0,0.98);
+        backdrop-filter: blur(14px);
+        border-left: 1px solid rgba(0,184,204,0.12);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 0.9rem 0; }
+      .nav-links li:not(:last-child) a { border-bottom: 1px solid var(--black-border); }
+      .nav-links .nav-cta { display: inline-block; margin-top: 1rem; text-align: center; }
     }
 
     @media (max-width: 600px) {
@@ -940,6 +963,11 @@
       <li><a href="#team">Team</a></li>
       <li><a href="#contact" class="nav-cta">Request Access</a></li>
     </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
@@ -1123,7 +1151,6 @@
   <section class="consultant" id="consultants">
     <div class="consultant-inner">
       <div>
-        <div class="consultant-badge">Included with Every Plan</div>
         <div class="section-label">Bidmana Consultants</div>
         <h2 class="section-title anim">Expert guidance <em>every step</em> of the way</h2>
         <p class="section-body anim" style="animation-delay:0.1s">
@@ -1278,7 +1305,7 @@
         <img class="team-photo" src="Greg.jpeg" alt="Greg Trent" />
         <h3>Greg Trent</h3>
         <div class="team-role">Co-CEO &amp; CTO</div>
-        <p>Greg is a cybersecurity and DevSecOps leader with a track record of driving capture wins, facility security clearance approvals, and technical architecture for defense and federal programs. He has served as acting senior architect for a proprietary edge device build, integrating bare-metal hypervisors and Kubernetes container orchestration onto field-deployable tactical hardware, presenting architectures to mission partners.</p>
+        <p>Greg is a cybersecurity and DevSecOps leader with a track record of driving capture wins and technical architecture for defense and federal programs. He has served as acting senior architect for a proprietary edge device build, integrating bare-metal hypervisors and Kubernetes container orchestration onto field-deployable tactical hardware, presenting architectures to mission partners.</p>
         <p>His technical background spans DevOps engineering, information system security, and Linux administration across aerospace defense companies, where he supported classified DoD programs, RMF accreditation, and enterprise system hardening. His DevOps work includes Ansible automation for DISA STIG compliance, Kubernetes cluster migrations, and infrastructure-as-code deployment pipelines.</p>
         <p>Greg holds CISSP and Security+ certifications, along with an M.S. in Cybersecurity from the University of South Florida and a Post-Graduate Certificate in DevOps from Caltech. He is a U.S. Army veteran (E6/SSG) and former SIGINT team leader.</p>
       </div>
@@ -1320,6 +1347,23 @@
     }, { threshold: 0.12 });
 
     document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
   </script>
 </body>
 </html>
