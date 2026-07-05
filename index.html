@@ -834,6 +834,78 @@
       font-weight: 300;
     }
 
+    /* ── TEAM ── */
+    .team {
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(ellipse at center, rgba(0,184,204,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .team-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 10px;
+      padding: 2.5rem;
+      transition: border-color 0.25s;
+    }
+
+    .team-card:hover { border-color: rgba(0,184,204,0.3); }
+
+    .team-photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(0,184,204,0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .team-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .team-role {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.25rem;
+    }
+
+    .team-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .team-card p:last-child { margin-bottom: 0; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .problem-grid,
@@ -842,6 +914,7 @@
       .blink-inner { grid-template-columns: 1fr; gap: 3rem; }
       .intel-grid { grid-template-columns: 1fr; }
       .solution-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
       .sol-card { border-right: none; border-bottom: 1.5px solid var(--black-border); }
       .sol-card:last-child { border-bottom: none; }
       .nav-links { display: none; }
@@ -864,6 +937,7 @@
       <li><a href="#link">Bidmana Link</a></li>
       <li><a href="#consultants">Consultants</a></li>
       <li><a href="#advantage">Why Us</a></li>
+      <li><a href="#team">Team</a></li>
       <li><a href="#contact" class="nav-cta">Request Access</a></li>
     </ul>
   </nav>
@@ -1181,6 +1255,37 @@
       </div>
     </div>
   </section>
+
+  <div class="divider"></div>
+
+  <!-- TEAM -->
+  <section class="team" id="team">
+    <div class="section-label">Leadership</div>
+    <h2 class="section-title anim">Meet the <em>founders</em></h2>
+    <p class="section-body anim" style="animation-delay:0.1s">
+      Bidmana is built by founders who have lived the federal contracting and defense technology worlds from the inside.
+    </p>
+    <div class="team-grid">
+      <div class="team-card anim" style="animation-delay:0.12s">
+        <img class="team-photo" src="Richard.jpg" alt="Richard Kime" />
+        <h3>Richard Kime</h3>
+        <div class="team-role">Co-CEO &amp; COO</div>
+        <p>Richard brings over a decade of federal contracting expertise spanning the Department of Defense, Defense Health Agency, and Defense Contract Management Agency (DCMA). He currently serves as Staff Contracts Advisor supporting the Office of the Secretary of Defense for Policy, where he drafts and refines software development requirements for Secretary of the Air Force Operational Energy initiatives across DoD software factories nationwide.</p>
+        <p>His career includes managing a $1.8B portfolio of Foreign Military Sales contracts in Saudi Arabia as Deputy Director of Contracts for DCMA, building a $311M contracts portfolio supporting 45,000 personnel at Joint Base Elmendorf-Richardson, and organically developing a $70M contract portfolio for the Special Warfare Training Wing. As a Contracting Officer for the Defense Health Agency, he held an unlimited PCO warrant and secured a $1M SBIR Phase III award for a Drug Utilization Tool.</p>
+        <p>Richard served in the United States Air Force for nearly five years, as a Major. His military and federal career reflect a consistent record of leading diverse teams, managing complex multimillion-dollar acquisitions, and delivering results in high-stakes national security environments.</p>
+      </div>
+      <div class="team-card anim" style="animation-delay:0.2s">
+        <img class="team-photo" src="Greg.jpeg" alt="Greg Trent" />
+        <h3>Greg Trent</h3>
+        <div class="team-role">Co-CEO &amp; CTO</div>
+        <p>Greg is a cleared cybersecurity and DevSecOps leader with a track record of driving capture wins, facility security clearance approvals, and technical architecture for defense and federal programs. He has served as acting senior architect for a proprietary edge device build, integrating bare-metal hypervisors and Kubernetes container orchestration onto field-deployable tactical hardware, presenting architectures to mission partners.</p>
+        <p>His technical background spans DevOps engineering, information system security, and Linux administration across aerospace defense companies, where he supported classified DoD programs, RMF accreditation, and enterprise system hardening. His DevOps work includes Ansible automation for DISA STIG compliance, Kubernetes cluster migrations, and infrastructure-as-code deployment pipelines.</p>
+        <p>Greg holds CISSP and Security+ certifications, along with an M.S. in Cybersecurity from the University of South Florida and a Post-Graduate Certificate in DevOps from Caltech. He is a U.S. Army veteran (E6/SSG) and former SIGINT team leader.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
 
   <!-- CTA -->
   <section class="cta-section" id="contact">
