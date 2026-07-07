@@ -299,31 +299,30 @@
     .problem-items {
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
+      gap: 2.25rem;
     }
 
     .problem-item {
       display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
+      gap: 1.5rem;
+      align-items: center;
     }
 
     .problem-icon {
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
-      border-radius: 6px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 8px;
       background: rgba(0,184,204,0.07);
       border: 1px solid rgba(0,184,204,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 2px;
     }
 
     .problem-icon svg {
-      width: 16px;
-      height: 16px;
+      width: 22px;
+      height: 22px;
       stroke: var(--teal-dim);
       fill: none;
       stroke-width: 1.5;
@@ -332,10 +331,10 @@
     }
 
     .problem-item h4 {
-      font-size: 0.95rem;
+      font-size: 1.25rem;
       font-weight: 600;
+      line-height: 1.35;
       color: var(--text-primary);
-      margin-bottom: 0.3rem;
     }
 
     .problem-item p {
@@ -949,25 +948,38 @@
     }
 
     /* ── Email menu (Gmail / Outlook Web / default app fallback) ── */
+    /* Fixed + centered in the viewport (not anchored to the button) so it can
+       never be clipped, regardless of scroll position, page length, or screen size. */
+    .email-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 199;
+      background: rgba(0,0,0,0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .email-menu-backdrop.open { opacity: 1; }
     .email-menu {
-      position: absolute;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -48%);
       z-index: 200;
-      min-width: 220px;
+      width: min(320px, calc(100vw - 32px));
       background: var(--black-card);
       border: 1px solid rgba(0,184,204,0.25);
       border-radius: 10px;
       padding: 0.4rem;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.55);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.6);
       display: flex;
       flex-direction: column;
       gap: 2px;
-      max-height: calc(100vh - 24px);
+      max-height: calc(100vh - 48px);
       overflow-y: auto;
       opacity: 0;
-      transform: translateY(-4px);
       transition: opacity 0.15s ease, transform 0.15s ease;
     }
-    .email-menu.open { opacity: 1; transform: translateY(0); }
+    .email-menu.open { opacity: 1; transform: translate(-50%, -50%); }
     .email-menu a,
     .email-menu button {
       display: flex;
@@ -1075,6 +1087,22 @@
             <h4>Chasing SMEs</h4>
           </div>
         </div>
+        <div class="problem-item anim" style="animation-delay:0.24s">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 2h8l4 4v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v5h5"/></svg>
+          </div>
+          <div>
+            <h4>Managing disconnected Word, Excel &amp; SharePoint files</h4>
+          </div>
+        </div>
+        <div class="problem-item anim" style="animation-delay:0.32s">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.75V17h8v-2.25A7 7 0 0 0 12 2z"/></svg>
+          </div>
+          <div>
+            <h4>Losing institutional knowledge</h4>
+          </div>
+        </div>
       </div>
       <div class="problem-stat-block anim" style="animation-delay:0.1s">
         <div class="stat-card">
@@ -1100,7 +1128,7 @@
     <div class="section-label">The Solution</div>
     <h2 class="section-title anim">An AI and expert enabled proposal operations <em>infrastructure platform</em></h2>
     <p class="section-body anim" style="animation-delay:0.1s">
-      Purpose-built for government contractors. Not another point tool, but a complete operational infrastructure that compounds in value over time.
+      Bidmana is the AI operating system for Government proposal teams. We combine AI-powered workflows, institutional knowledge, and expert guidance into one collaborative workspace.
     </p>
     <div class="solution-grid anim" style="animation-delay:0.15s">
       <div class="sol-card">
@@ -1415,24 +1443,30 @@
     }
 
     let activeEmailMenu = null;
+    let activeEmailBackdrop = null;
 
     function closeEmailMenu() {
       if (activeEmailMenu) {
         activeEmailMenu.remove();
+        activeEmailBackdrop.remove();
         activeEmailMenu = null;
-        document.removeEventListener('click', onOutsideClick, true);
-        window.removeEventListener('resize', closeEmailMenu);
-        window.removeEventListener('scroll', closeEmailMenu, true);
+        activeEmailBackdrop = null;
+        document.removeEventListener('keydown', onEmailMenuKeydown);
       }
     }
 
-    function onOutsideClick(e) {
-      if (activeEmailMenu && !activeEmailMenu.contains(e.target)) closeEmailMenu();
+    function onEmailMenuKeydown(e) {
+      if (e.key === 'Escape') closeEmailMenu();
     }
 
-    function openEmailMenu(anchorEl) {
+    function openEmailMenu() {
       if (activeEmailMenu) { closeEmailMenu(); return; }
       const links = emailLinks();
+
+      const backdrop = document.createElement('div');
+      backdrop.className = 'email-menu-backdrop';
+      backdrop.addEventListener('click', closeEmailMenu);
+      document.body.appendChild(backdrop);
 
       const menu = document.createElement('div');
       menu.className = 'email-menu';
@@ -1446,32 +1480,10 @@
         <button type="button" data-copy>Copy email address</button>
       `;
       document.body.appendChild(menu);
-
-      const rect = anchorEl.getBoundingClientRect();
-      const viewportH = window.innerHeight;
-      const gap = 8;
-      const spaceBelow = viewportH - rect.bottom;
-      const spaceAbove = rect.top;
-      const menuH = menu.offsetHeight;
-
-      // Flip above the button when there isn't room below, but only if there's
-      // more room above — otherwise clamp to the viewport so it's never cut off.
-      let top;
-      if (spaceBelow >= menuH + gap || spaceBelow >= spaceAbove) {
-        top = rect.bottom + window.scrollY + gap;
-      } else {
-        top = rect.top + window.scrollY - menuH - gap;
-      }
-      const minTop = window.scrollY + gap;
-      const maxTop = window.scrollY + viewportH - menuH - gap;
-      top = Math.min(Math.max(top, minTop), Math.max(maxTop, minTop));
-
-      let left = rect.left + window.scrollX;
-      const maxLeft = window.scrollX + document.documentElement.clientWidth - menu.offsetWidth - 12;
-      left = Math.min(left, maxLeft);
-      menu.style.top = `${top}px`;
-      menu.style.left = `${Math.max(left, 12)}px`;
-      requestAnimationFrame(() => menu.classList.add('open'));
+      requestAnimationFrame(() => {
+        backdrop.classList.add('open');
+        menu.classList.add('open');
+      });
 
       menu.querySelector('[data-copy]').addEventListener('click', () => {
         const btn = menu.querySelector('[data-copy]');
@@ -1482,15 +1494,14 @@
       });
 
       activeEmailMenu = menu;
-      setTimeout(() => document.addEventListener('click', onOutsideClick, true), 0);
-      window.addEventListener('resize', closeEmailMenu);
-      window.addEventListener('scroll', closeEmailMenu, true);
+      activeEmailBackdrop = backdrop;
+      document.addEventListener('keydown', onEmailMenuKeydown);
     }
 
     document.querySelectorAll('a.mailto-cta').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        openEmailMenu(link);
+        openEmailMenu();
       });
     });
   </script>
