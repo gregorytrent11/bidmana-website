@@ -947,6 +947,52 @@
       .why-now-grid,
       .consultant-card-grid { grid-template-columns: 1fr; }
     }
+
+    /* ── Email menu (Gmail / Outlook Web / default app fallback) ── */
+    .email-menu {
+      position: absolute;
+      z-index: 200;
+      min-width: 220px;
+      background: var(--black-card);
+      border: 1px solid rgba(0,184,204,0.25);
+      border-radius: 10px;
+      padding: 0.4rem;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.55);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .email-menu.open { opacity: 1; transform: translateY(0); }
+    .email-menu a,
+    .email-menu button {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 6px;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.9rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .email-menu a:hover,
+    .email-menu button:hover { background: var(--teal-glow); color: var(--teal-light); }
+    .email-menu .email-menu-label {
+      padding: 0.4rem 0.75rem 0.2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .email-menu-divider { height: 1px; background: var(--black-border); margin: 4px 2px; }
   </style>
 </head>
 <body>
@@ -961,7 +1007,7 @@
       <li><a href="#consultants">Consultants</a></li>
       <li><a href="#advantage">Why Us</a></li>
       <li><a href="#team">Team</a></li>
-      <li><a href="mailto:1bidmana@gmail.com" class="nav-cta">Request Access</a></li>
+      <li><a href="mailto:1bidmana@gmail.com" class="nav-cta mailto-cta">Request Access</a></li>
     </ul>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span>
@@ -981,8 +1027,8 @@
       Win more proposals with AI-powered workflows, institutional knowledge, and expert guidance, all in one platform.
     </p>
     <div class="hero-actions anim" style="animation-delay:0.24s">
-      <a href="mailto:1bidmana@gmail.com" class="btn-primary">Request a Demo</a>
-      <a href="mailto:1bidmana@gmail.com" class="btn-ghost">
+      <a href="mailto:1bidmana@gmail.com" class="btn-primary mailto-cta">Request a Demo</a>
+      <a href="mailto:1bidmana@gmail.com" class="btn-ghost mailto-cta">
         Join Early Access
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
@@ -1322,7 +1368,7 @@
       Bidmana is in active development and onboarding a select group of federal contractor partners. If you're building a proposal team that wants to win more, reach out. A Bidmana consultant will respond directly.
     </p>
     <div class="cta-actions anim" style="animation-delay:0.2s">
-      <a href="mailto:1bidmana@gmail.com" class="btn-primary">Request a Demo</a>
+      <a href="mailto:1bidmana@gmail.com" class="btn-primary mailto-cta">Request a Demo</a>
     </div>
   </section>
 
@@ -1358,6 +1404,83 @@
         navLinks.classList.remove('open');
         navToggle.classList.remove('open');
         navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ── Email CTA menu — works without a desktop mail client ──
+    const EMAIL = '1bidmana@gmail.com';
+    const EMAIL_SUBJECT = 'Bidmana Demo Request';
+
+    function emailLinks() {
+      const su = encodeURIComponent(EMAIL_SUBJECT);
+      return {
+        gmail:   `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${su}`,
+        outlook: `https://outlook.office.com/mail/deeplink/compose?to=${EMAIL}&subject=${su}`,
+        yahoo:   `https://compose.mail.yahoo.com/?to=${EMAIL}&subject=${su}`,
+        mailto:  `mailto:${EMAIL}?subject=${su}`,
+      };
+    }
+
+    let activeEmailMenu = null;
+
+    function closeEmailMenu() {
+      if (activeEmailMenu) {
+        activeEmailMenu.remove();
+        activeEmailMenu = null;
+        document.removeEventListener('click', onOutsideClick, true);
+        window.removeEventListener('resize', closeEmailMenu);
+        window.removeEventListener('scroll', closeEmailMenu, true);
+      }
+    }
+
+    function onOutsideClick(e) {
+      if (activeEmailMenu && !activeEmailMenu.contains(e.target)) closeEmailMenu();
+    }
+
+    function openEmailMenu(anchorEl) {
+      if (activeEmailMenu) { closeEmailMenu(); return; }
+      const links = emailLinks();
+
+      const menu = document.createElement('div');
+      menu.className = 'email-menu';
+      menu.innerHTML = `
+        <div class="email-menu-label">Reach us at ${EMAIL}</div>
+        <a href="${links.gmail}" target="_blank" rel="noopener">Open in Gmail</a>
+        <a href="${links.outlook}" target="_blank" rel="noopener">Open in Outlook Web</a>
+        <a href="${links.yahoo}" target="_blank" rel="noopener">Open in Yahoo Mail</a>
+        <div class="email-menu-divider"></div>
+        <a href="${links.mailto}">Use desktop mail app</a>
+        <button type="button" data-copy>Copy email address</button>
+      `;
+      document.body.appendChild(menu);
+
+      const rect = anchorEl.getBoundingClientRect();
+      const top = rect.bottom + window.scrollY + 8;
+      let left = rect.left + window.scrollX;
+      const maxLeft = window.scrollX + document.documentElement.clientWidth - menu.offsetWidth - 12;
+      left = Math.min(left, maxLeft);
+      menu.style.top = `${top}px`;
+      menu.style.left = `${Math.max(left, 12)}px`;
+      requestAnimationFrame(() => menu.classList.add('open'));
+
+      menu.querySelector('[data-copy]').addEventListener('click', () => {
+        const btn = menu.querySelector('[data-copy]');
+        navigator.clipboard?.writeText(EMAIL).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(closeEmailMenu, 900);
+        }).catch(() => { btn.textContent = EMAIL; });
+      });
+
+      activeEmailMenu = menu;
+      setTimeout(() => document.addEventListener('click', onOutsideClick, true), 0);
+      window.addEventListener('resize', closeEmailMenu);
+      window.addEventListener('scroll', closeEmailMenu, true);
+    }
+
+    document.querySelectorAll('a.mailto-cta').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openEmailMenu(link);
       });
     });
   </script>
