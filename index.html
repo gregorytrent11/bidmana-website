@@ -961,6 +961,8 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
+      max-height: calc(100vh - 24px);
+      overflow-y: auto;
       opacity: 0;
       transform: translateY(-4px);
       transition: opacity 0.15s ease, transform 0.15s ease;
@@ -1446,7 +1448,24 @@
       document.body.appendChild(menu);
 
       const rect = anchorEl.getBoundingClientRect();
-      const top = rect.bottom + window.scrollY + 8;
+      const viewportH = window.innerHeight;
+      const gap = 8;
+      const spaceBelow = viewportH - rect.bottom;
+      const spaceAbove = rect.top;
+      const menuH = menu.offsetHeight;
+
+      // Flip above the button when there isn't room below, but only if there's
+      // more room above — otherwise clamp to the viewport so it's never cut off.
+      let top;
+      if (spaceBelow >= menuH + gap || spaceBelow >= spaceAbove) {
+        top = rect.bottom + window.scrollY + gap;
+      } else {
+        top = rect.top + window.scrollY - menuH - gap;
+      }
+      const minTop = window.scrollY + gap;
+      const maxTop = window.scrollY + viewportH - menuH - gap;
+      top = Math.min(Math.max(top, minTop), Math.max(maxTop, minTop));
+
       let left = rect.left + window.scrollX;
       const maxLeft = window.scrollX + document.documentElement.clientWidth - menu.offsetWidth - 12;
       left = Math.min(left, maxLeft);
