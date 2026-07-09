@@ -157,6 +157,10 @@
 
     .hero-logo {
       margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     .hero-logo img {
@@ -164,6 +168,15 @@
       width: auto;
       filter: drop-shadow(0 0 36px rgba(0,184,204,0.30));
     }
+
+    .hero-logo .hero-wordmark {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-logo .hero-wordmark .wm-bid { color: var(--text-primary); }
+    .hero-logo .hero-wordmark .wm-mana { color: var(--teal); }
 
     .hero-eyebrow {
       display: inline-flex;
@@ -1019,7 +1032,8 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-logo anim">
-      <img src="Bidmana Logo Transparent.png" alt="Bidmana" />
+      <img src="mana.png" alt="Bidmana" />
+      <span class="hero-wordmark"><span class="wm-bid">Bid</span><span class="wm-mana">mana</span></span>
     </div>
     <h1 class="anim" style="animation-delay:0.08s">The AI Operating System for<br /><em>Government Proposal Teams</em></h1>
     <p class="hero-sub anim" style="animation-delay:0.16s">
