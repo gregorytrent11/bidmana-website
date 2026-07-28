@@ -451,14 +451,64 @@
 
     .consultant-inner {
       position: relative;
-      max-width: 760px;
+      max-width: 840px;
       margin: 0 auto;
     }
 
     .consultant .section-label { justify-content: center; display: flex; }
-    .consultant .section-title { margin: 0 auto 1.5rem; text-align: center; max-width: 100%; }
-    .consultant .section-body { margin: 0 auto; text-align: center; max-width: 100%; }
+    .consultant .section-title { margin: 0 auto 1.5rem; text-align: center; max-width: 600px; }
+    .consultant .section-body { margin: 0 auto; text-align: center; max-width: 600px; }
     .consultant .section-body + .section-body { margin-top: 1.25rem; }
+
+    .consultant-stages {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .consultant-stages::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 6%;
+      right: 6%;
+      height: 1px;
+      background: var(--black-border);
+    }
+
+    .consultant-stage {
+      position: relative;
+      flex: 1;
+      padding: 0 0.5rem;
+    }
+
+    .consultant-stage-dot {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px rgba(0,184,204,0.55);
+      margin: 0 auto 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .consultant-stage h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .consultant-stage p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-weight: 300;
+    }
 
     /* ── ADVANTAGE ── */
     .advantage { background: var(--black-mid); }
@@ -893,8 +943,18 @@
       .nav-links .nav-cta { display: inline-block; margin-top: 1rem; text-align: center; }
     }
 
+    @media (max-width: 700px) {
+      .consultant-stages { flex-wrap: wrap; }
+      .consultant-stages::before { display: none; }
+      .consultant-stage { flex: 0 0 50%; margin-bottom: 2rem; }
+    }
+
     @media (max-width: 600px) {
       .why-now-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .consultant-stage { flex: 0 0 100%; }
     }
 
     /* ── Email menu (Gmail / Outlook Web / default app fallback) ── */
@@ -1119,7 +1179,29 @@
       <p class="section-body anim" style="animation-delay:0.18s">
         Bidmana combines AI-powered proposal operations with experienced GovCon professionals who can step in whenever your team needs additional support. From early capture planning to final proposal submission, experts are embedded directly into your workflow, not brought in after the fact.
       </p>
-      <p class="section-body anim" style="animation-delay:0.26s">
+      <div class="consultant-stages anim" style="animation-delay:0.26s">
+        <div class="consultant-stage">
+          <span class="consultant-stage-dot"></span>
+          <h4>Capture Planning</h4>
+          <p>Bid or no bid strategy and early positioning</p>
+        </div>
+        <div class="consultant-stage">
+          <span class="consultant-stage-dot"></span>
+          <h4>Proposal Development</h4>
+          <p>Technical and management volume writing</p>
+        </div>
+        <div class="consultant-stage">
+          <span class="consultant-stage-dot"></span>
+          <h4>Compliance &amp; Color Reviews</h4>
+          <p>Structured reviews before it leaves your hands</p>
+        </div>
+        <div class="consultant-stage">
+          <span class="consultant-stage-dot"></span>
+          <h4>Pricing &amp; Submission</h4>
+          <p>Price to win support through final delivery</p>
+        </div>
+      </div>
+      <p class="section-body anim" style="animation-delay:0.34s; margin-top: 3rem;">
         No matter the task or help needed, Bidmana gives you access to trusted professionals who work alongside your team inside the platform.
       </p>
     </div>
