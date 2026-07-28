@@ -476,11 +476,17 @@
       position: relative;
       display: flex;
       gap: 1.1rem;
-      padding: 1.1rem 0;
+      padding: 1.1rem 1rem;
+      margin: 0 -1rem;
+      border-radius: 8px;
+      cursor: default;
+      transition: background-color 0.25s;
     }
 
     .consultant-stage:first-child { padding-top: 0; }
     .consultant-stage:last-child { padding-bottom: 0; }
+
+    .consultant-stage:hover { background: var(--black-card); }
 
     .consultant-stage-dot {
       flex: none;
@@ -492,14 +498,29 @@
       box-shadow: 0 0 8px rgba(0,184,204,0.55);
       position: relative;
       z-index: 1;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
+
+    .consultant-stage:hover .consultant-stage-dot {
+      transform: scale(1.35);
+      box-shadow: 0 0 12px rgba(0,184,204,0.9);
+    }
+
+    .consultant-stage-text {
+      transition: transform 0.25s;
+    }
+
+    .consultant-stage:hover .consultant-stage-text { transform: translateX(4px); }
 
     .consultant-stage h4 {
       font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 0.3rem;
+      transition: color 0.25s;
     }
+
+    .consultant-stage:hover h4 { color: var(--teal); }
 
     .consultant-stage p {
       font-size: 0.8rem;
@@ -1176,37 +1197,44 @@
       <div class="consultant-stages anim" style="animation-delay:0.2s">
         <div class="consultant-stage">
           <span class="consultant-stage-dot"></span>
-          <div>
+          <div class="consultant-stage-text">
             <h4>Business Development</h4>
             <p>Pipeline building and opportunity qualification before a solicitation drops</p>
           </div>
         </div>
         <div class="consultant-stage">
           <span class="consultant-stage-dot"></span>
-          <div>
+          <div class="consultant-stage-text">
             <h4>Capture Planning</h4>
             <p>Bid or no bid strategy and early positioning</p>
           </div>
         </div>
         <div class="consultant-stage">
           <span class="consultant-stage-dot"></span>
-          <div>
+          <div class="consultant-stage-text">
             <h4>Proposal Development</h4>
             <p>Technical and management volume writing</p>
           </div>
         </div>
         <div class="consultant-stage">
           <span class="consultant-stage-dot"></span>
-          <div>
+          <div class="consultant-stage-text">
             <h4>Compliance &amp; Color Reviews</h4>
             <p>Structured reviews before it leaves your hands</p>
           </div>
         </div>
         <div class="consultant-stage">
           <span class="consultant-stage-dot"></span>
-          <div>
+          <div class="consultant-stage-text">
             <h4>Pricing &amp; Submission</h4>
             <p>Price to win support through final delivery</p>
+          </div>
+        </div>
+        <div class="consultant-stage">
+          <span class="consultant-stage-dot"></span>
+          <div class="consultant-stage-text">
+            <h4>Lessons Learned &amp; After Action Reviews</h4>
+            <p>Post submission debriefs that feed insights back into your next pursuit</p>
           </div>
         </div>
       </div>
